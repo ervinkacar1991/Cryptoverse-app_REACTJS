@@ -18,4 +18,4 @@ export const cryptoApi = createApi({
     }),
   }),
 });
-export const { useGetCryptosQuery } = cryptoApi;
+export const { useGetCryptosQuery } = cryptoApi; // readux create hook that u can call to get all the data for your query
