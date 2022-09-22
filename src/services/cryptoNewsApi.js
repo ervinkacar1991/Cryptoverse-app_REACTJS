@@ -1,4 +1,3 @@
-import create from "@ant-design/icons/lib/components/IconFont";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const cryptoNewsHeaders = {
@@ -18,7 +17,7 @@ export const cryptoNewsApi = createApi({
     getCryptoNews: builder.query({
       query: ({ newsCategory, count }) =>
         createRequest(
-          `/news/search?q=${newsCategory}&safeSearch=Off&textFormat=Rar&freshness=Day&count=${count}`
+          `/news/search?q=${newsCategory}&safeSearch=Off&textFormat=Raw&freshness=Day&count=${count}`
         ),
     }),
   }),
