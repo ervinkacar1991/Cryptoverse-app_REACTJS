@@ -16,6 +16,10 @@ export const cryptoApi = createApi({
     getCryptos: builder.query({
       query: (count) => createRequest(`/coins?limit=${count}`),
     }),
+    getCryptoDetails: builder.query({
+      query: (coinId) => createRequest(`/coin/${coinId}`),
+    }),
   }),
 });
 export const { useGetCryptosQuery } = cryptoApi; // readux create hook that u can call to get all the data for your query
+export const { useGetCryptoDetailsQuery } = cryptoApi;
