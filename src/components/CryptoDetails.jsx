@@ -27,17 +27,17 @@ console.log(coinDetails);
   const stats = [
     { title: 'Price to USD', value: `$ ${coinDetails?.coin.price && millify(coinDetails?.coin.price)}`, icon: <DollarCircleOutlined /> },
     { title: 'Rank', value: coinDetails?.coin.rank, icon: <NumberOutlined /> },
-    { title: '24h Volume', value: `$ ${coinDetails?.coin.volume && millify(coinDetails?.coin.volume)}`, icon: <ThunderboltOutlined /> },
+    { title: '24h Volume', value: `$ ${coinDetails?.coin["24hVolume"] && millify(coinDetails?.coin["24hVolume"])}`, icon: <ThunderboltOutlined /> },
     { title: 'Market Cap', value: `$ ${coinDetails?.coin.marketCap && millify(coinDetails?.coin.marketCap)}`, icon: <DollarCircleOutlined /> },
-    { title: 'All-time-high(daily avg.)', value: `$ ${millify(coinDetails?.coin.allTimeHigh.price)}`, icon: <TrophyOutlined /> },
+    { title: 'All-time-high(daily avg.) ', value: `$ ${millify(coinDetails?.coin.allTimeHigh.price)}`, icon: <TrophyOutlined /> },
   ];
 
   const genericStats = [
     { title: 'Number Of Markets', value: coinDetails?.coin.numberOfMarkets, icon: <FundOutlined /> },
     { title: 'Number Of Exchanges', value: coinDetails?.coin.numberOfExchanges, icon: <MoneyCollectOutlined /> },
     { title: 'Aprroved Supply', value: coinDetails?.coin.approvedSupply ? <CheckOutlined /> : <StopOutlined />, icon: <ExclamationCircleOutlined /> },
-    { title: 'Total Supply', value: `$ ${millify(coinDetails?.coin.totalSupply)}`, icon: <ExclamationCircleOutlined /> },
-    { title: 'Circulating Supply', value: `$ ${millify(coinDetails?.coin.circulatingSupply)}`, icon: <ExclamationCircleOutlined /> },
+    { title: 'Total Supply', value: `$ ${millify(coinDetails?.coin.supply["total"])}`, icon: <ExclamationCircleOutlined /> },
+    { title: 'Circulating Supply', value: `$ ${millify(coinDetails?.coin.supply["circulating"])}`, icon: <ExclamationCircleOutlined /> },
   ];
   
 
@@ -78,12 +78,42 @@ console.log(coinDetails);
           <Text>{icon}</Text>
           <Text>{title}</Text>
         </Col>
+        <Text className='stats'>{value}</Text>
       </Col>
     ))}
   </Col>
-
+  <Col className='other-stats-info'>
+    <Col className='coin-value-statistics-heading'>
+      <Title level={3} className="coin-details-heading">Other Statistics</Title>
+      <p>An overview showing the stats of all cryptocurrencies</p>
+    </Col>
+    {genericStats.map(({icon, title, value})=>(
+      <Col className='coin-stats'>
+        <Col className='coin-stats-name'>
+          <Text>{icon}</Text>
+          <Text>{title}</Text>
+        </Col>
+        <Text className='stats'>{value}</Text>
+      </Col>
+    ))}
+  </Col>
 </Col>
-
+<Col className='coin-desc-link'>
+  <Row className='coin-desc'>
+    <Title level={3} className="coin-details-heading">What is {coinDetails?.coin.name}</Title>
+    {HTMLReactParser(coinDetails?.coin.description)}
+    
+  </Row>
+  <Col className='coin-links'>
+    <Title level={3} className="coin-details-heaidng">{coinDetails?.coin.name} Links</Title>
+    {coinDetails?.coin.links.map((link)=>(
+      <Row className='coin-link' key={link.name}>
+        <Title level={5} className="link-name">{link.type}</Title>
+        <a href={link.url} target="_blank" rel='noreferrer'>{link.name}</a>
+      </Row>
+    ))}
+  </Col>
+</Col>
   </Col>
   )
 }
