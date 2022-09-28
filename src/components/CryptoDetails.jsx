@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom'
 import millify from 'millify'
 import {Col, Row, Typography, Select} from "antd"
 import { MoneyCollectOutlined, DollarCircleOutlined, FundOutlined, ExclamationCircleOutlined, StopOutlined, TrophyOutlined, CheckOutlined, NumberOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import {useGetCryptoDetailsQuery} from '../services/cryptoApi';
+import {useGetCryptoDetailsQuery, useGetCryptoHistoryQuery} from '../services/cryptoApi';
+import LineChart from './LineChart'
 
 const {Title, Text} = Typography
 const {Option}= Select
@@ -13,10 +14,12 @@ const CryptoDetails = () => {
   const {coinId} = useParams() //allow us to take id from url and allow us to use them us a variable
   const [timePeriod, setTimePeriod] = useState('7d')
   const {data, isFetching} = useGetCryptoDetailsQuery(coinId)
+  const {data: coinHistory} = useGetCryptoHistoryQuery({coinId, timePeriod})
   // const cryptoDetails = data?.data?.coin
  
   
 const coinDetails = data?.data
+
 
 console.log(coinDetails);
 
@@ -64,7 +67,7 @@ console.log(coinDetails);
 
      </Select>
 
-     {/* /* line chart..... */ }
+    <LineChart coinHistory={coinHistory} currentPrice={millify(coinDetails?.coin.price)} coinName={coinDetails?.coin.name}/>
 
 <Col className='stats-container'>
   <Col className='coin-value-statistics'>
